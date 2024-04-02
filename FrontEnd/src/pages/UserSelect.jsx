@@ -34,7 +34,6 @@ function UserSelect() {
       };
     });
   };
-axios.defaults.withCredentials = true
   const uploadingData = async (user, file) => {
     setLoading(true);
     const client = new Client()
