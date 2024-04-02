@@ -18,6 +18,11 @@ export default defineConfig(({ command }) => {
           changeOrigin: true,
           secure: false,
         },
+        '/v1': {
+        target: 'https://cloud.appwrite.io',
+        changeOrigin: true,
+        secure: false,
+      },
       },
     },
   };
