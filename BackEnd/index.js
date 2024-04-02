@@ -7,9 +7,6 @@ dotenv.config({
   path: ".env", //give .env file location
 });
 
-app.get("/",(res,req)=>{
-  res.json("Hello")
-})
 const port = process.env.PORT; // Use the PORT environment variable
 const app = express();
 app.use(express.json());
