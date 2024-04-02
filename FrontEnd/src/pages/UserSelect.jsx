@@ -83,11 +83,11 @@ function UserSelect() {
       <div className="flex items-center justify-center gap-[24px] w-[70%] mx-auto h-full">
         {/* login  */}
         <div className="w-full  h-full flex flex-col items-center justify-center ">
-          <h1 className="font-poppins mb-20 text-4xl font-extrabold text-indigo-700 ">
+          <h1 className="font-poppins mb-[20px] text-4xl font-extrabold text-indigo-700 ">
             {" "}
             Log In{" "}
           </h1>
-          <div className=" max-h-[350px]  min-h-[350px] overflow-y-scroll p-2 scroll-m-0 no-scrollbar flex flex-col items-center">
+          <div className=" max-h-[380px] mb-[25px]  min-h-[380px] overflow-y-scroll p-2 scroll-m-0 no-scrollbar flex flex-col items-center">
             <RadioGroup value={selected} onChange={setSelected}>
               <RadioGroup.Label className="sr-only">
                 Server size
