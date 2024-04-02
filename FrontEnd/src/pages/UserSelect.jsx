@@ -15,7 +15,7 @@ function UserSelect() {
 
   useEffect(() => {
     console.log("hello");
-    axios.get("http://localhost:3001/getUsers").then((res) => {
+    axios.get(`${import.meta.env.VITE_BACKEND_API}/getUsers`).then((res) => {
       setUsers(res?.data);
       setSelected(res?.data[0]);
     });
@@ -58,7 +58,7 @@ function UserSelect() {
             response.$id
           );
           if (result) {
-            axios.post("http://localhost:3001/register", {
+            axios.post(`${import.meta.env.VITE_BACKEND_API}/register`, {
               id: user.id,
               name: user.name.split(".")[0],
               type: user.type,
