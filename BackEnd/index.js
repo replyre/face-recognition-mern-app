@@ -10,16 +10,8 @@ dotenv.config({
 const port = process.env.PORT; // Use the PORT environment variable
 const app = express();
 app.use(express.json());
-const allowedOrigins = ['https://localhost', 'https://face-recognition-mern-app.vercel.app'];
 app.use(cors({
-  origin: function(origin, callback) {
-    // Check if the origin is in the allowed origins list
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
+  origin: '*'
 }));
 mongoose.connect(process.env.MONGO_URL);
 
