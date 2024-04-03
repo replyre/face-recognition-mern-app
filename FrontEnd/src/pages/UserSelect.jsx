@@ -12,13 +12,19 @@ function UserSelect() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [users, setUsers] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const config = {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    },
+  };
   useEffect(() => {
-    console.log("hello");
-    axios.get(`${import.meta.env.VITE_BACKEND_API}/getUsers`).then((res) => {
-      setUsers(res?.data);
-      setSelected(res?.data[0]);
-    });
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_API}/getUsers`, config)
+      .then((res) => {
+        setUsers(res?.data);
+        setSelected(res?.data[0]);
+      });
   }, []);
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -34,6 +40,7 @@ function UserSelect() {
       };
     });
   };
+
   const uploadingData = async (user, file) => {
     setLoading(true);
     const client = new Client()
@@ -57,12 +64,16 @@ function UserSelect() {
             response.$id
           );
           if (result) {
-            axios.post(`${import.meta.env.VITE_BACKEND_API}/register`, {
-              id: user.id,
-              name: user.name.split(".")[0],
-              type: user.type,
-              picture: result?.href,
-            });
+            axios.post(
+              `${import.meta.env.VITE_BACKEND_API}/register`,
+              {
+                id: user.id,
+                name: user.name.split(".")[0],
+                type: user.type,
+                picture: result?.href,
+              },
+              config
+            );
 
             console.log("uploaded successfully");
             setCustomUser(user);
