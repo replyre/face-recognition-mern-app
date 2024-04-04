@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div className="bg-gradient-to-r from-blue-100 from-50% white-100 via-10% to-purple-200 to-90%  md:pt-20 ">
-      <div className="mx-auto max-w-7xl">
-        <div className="text-center mb-24">
-          <div className="flex items-center w-[80%] m-auto ">
+    <div className="bg-gradient-to-r h-[100vh] from-blue-100 from-50% white-100 via-10% to-purple-200 to-90%">
+      <div className="mx-auto h-full flex items-center ">
+        <div className="text-center">
+          <div className="flex items-center w-[80%] m-auto flex-col md:flex-row ">
             <div>
-              <h1 className="block text-7xl text-left tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl font-poppins">
+              <h1 className="block mt-5 text-3xl text-center tracking-tight font-extrabold text-gray-900  sm:text-5xl md:text-6xl font-poppins">
                 Welcome To
               </h1>
-              <h1 className="block text-7xl text-left font-extrabold text-gray-900 sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 from-10% to-purple-700 to-90%  p-2">
+              <h1 className="block text-3xl text-center  font-extrabold text-gray-900 sm:text-5xl md:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 from-10% to-purple-700 to-90%  p-2">
                 Face Recognition Login App
               </h1>
             </div>

@@ -89,14 +89,14 @@ function UserSelect() {
   };
   return (
     <>
-      <div className="flex items-center justify-center gap-[24px] w-[70%] mx-auto h-full">
+      <div className="flex flex-col items-center justify-center gap-[24px] w-[70%] mx-auto h-full md:flex-row">
         {/* login  */}
         <div className="w-full  h-full flex flex-col items-center justify-center ">
-          <h1 className="font-poppins mb-[20px] text-4xl font-extrabold text-indigo-700 ">
+          <h1 className="font-poppins mb-[20px] mt-2 text-4xl font-extrabold text-indigo-700 ">
             {" "}
             Log In{" "}
           </h1>
-          <div className=" max-h-[380px] mb-[25px]  min-h-[380px] overflow-y-scroll p-2 scroll-m-0 no-scrollbar flex flex-col items-center">
+          <div className=" h-[300px] md:max-h-[380px] mb-[25px]  md:min-h-[380px] overflow-y-scroll p-2 scroll-m-0 scrollbar-width: thin  flex flex-col items-center">
             <RadioGroup value={selected} onChange={setSelected}>
               <RadioGroup.Label className="sr-only">
                 Server size
@@ -134,19 +134,20 @@ function UserSelect() {
           </div>
         </div>
         {/* register  */}
+        <div className=" border-b-2 mt-5 border-slate-300 w-[350px] md:hidden"></div>
         {!loading && (
           <div className="w-full  h-full flex flex-col items-center justify-center">
-            <h1 className="font-poppins mb-5 text-4xl font-extrabold text-indigo-700 ">
+            <h1 className="font-poppins mb-2  text-4xl font-extrabold text-indigo-700 ">
               {" "}
               Register
             </h1>
             {!customUser && (
-              <div className="flex flex-col items-center justify-center w-[80%]  min-h-[350px] mt-3">
+              <div className="flex flex-col pt-2 items-center justify-center h-[100px] md:w-[80%]  md:min-h-[350px] mt-2">
                 <label
                   htmlFor="dropzone-file"
-                  className="flex flex-col items-center justify-center w-[350px] border-2  border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:border-indigo-200 hover:bg-gray-100"
+                  className="flex flex-col items-center justify-center w-[350px] h-[120%] md:w-[350px] border-2  border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:border-indigo-200 hover:bg-gray-100"
                 >
-                  <div className="flex flex-col items-center justify-center h-[320px] w-[200px]">
+                  <div className="flex flex-col items-center justify-center md:h-[320px] md:w-[200px]">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -231,7 +232,7 @@ function UserSelect() {
               </div>
             )}
             {!customUser && (
-              <p className="font-poppins w-[80%] text-center">
+              <p className="font-poppins pt-2 text-[10px] w-[80%] text-center md:text-base">
                 *please note: the name of image should be same as your name.{" "}
               </p>
             )}
@@ -265,7 +266,7 @@ function UserSelect() {
       <Link
         to="/login"
         state={{ account: selected }}
-        className=" m-auto mb-4 inline-flex items-center rounded-md bg-indigo-500 px-10 py-4  text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 w-fit"
+        className=" m-auto mb-4 pb-4 inline-flex items-center rounded-md bg-indigo-500 px-10 py-4  text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 w-fit"
       >
         Proceed
         <svg
