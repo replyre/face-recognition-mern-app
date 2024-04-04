@@ -20,12 +20,10 @@ function UserSelect() {
   };
   useEffect(() => {
     console.log("hello");
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_API}/getUsers`, config)
-      .then((res) => {
-        setUsers(res?.data);
-        setSelected(res?.data[0]);
-      });
+    axios.get(`${import.meta.env.VITE_BACKEND_API}/getUsers`).then((res) => {
+      setUsers(res?.data);
+      setSelected(res?.data[0]);
+    });
   }, []);
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {

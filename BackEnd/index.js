@@ -10,8 +10,9 @@ dotenv.config({
 const port = process.env.PORT; // Use the PORT environment variable
 const app = express();
 app.use(express.json());
-app.use(cors());
-
+app.use(cors({
+  origin: '*'
+}));
 mongoose.connect(process.env.MONGO_URL);
 
 app.post("/register", (req, res) => {
