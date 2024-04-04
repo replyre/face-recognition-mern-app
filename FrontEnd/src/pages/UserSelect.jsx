@@ -12,6 +12,7 @@ function UserSelect() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [users, setUsers] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loadingUsers, setLoadingUsers] = useState(true);
   const config = {
     headers: {
       "Access-Control-Allow-Origin": "*",
@@ -20,10 +21,17 @@ function UserSelect() {
   };
   useEffect(() => {
     console.log("hello");
-    axios.get(`${import.meta.env.VITE_BACKEND_API}/getUsers`).then((res) => {
-      setUsers(res?.data);
-      setSelected(res?.data[0]);
-    });
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_API}/getUsers`)
+      .then((res) => {
+        setUsers(res?.data);
+        setSelected(res?.data[0]);
+        setLoadingUsers(false);
+      })
+      .catch((e) => {
+        console.error(e);
+        setLoadingUsers(false);
+      });
   }, []);
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -96,42 +104,72 @@ function UserSelect() {
             {" "}
             Log In{" "}
           </h1>
-          <div className=" h-[300px] md:max-h-[380px] mb-[25px]  md:min-h-[380px] overflow-y-scroll p-2 scroll-m-0 scrollbar-width: thin  flex flex-col items-center">
-            <RadioGroup value={selected} onChange={setSelected}>
-              <RadioGroup.Label className="sr-only">
-                Server size
-              </RadioGroup.Label>
-              <div className="space-y-4">
-                {users &&
-                  users.map((account) => (
-                    <User key={account.id} user={account} />
-                  ))}
-                {customUser && (
-                  <div className="relative">
-                    <User key={customUser.id} user={customUser} type="CUSTOM" />
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="text-indigo-800 w-6 h-6 absolute top-1/2 -translate-y-1/2 right-[-32px] cursor-pointer"
-                      onClick={() => {
-                        setCustomUser(null);
-                        selected?.type === "CUSTOM" && setSelected(users[0]);
-                      }}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
+          {loadingUsers && (
+            <div className=" h-[200px] md:max-h-[380px] mb-[25px]  md:min-h-[380px]  p-2  flex flex-col items-center justify-evenly">
+              <svg
+                aria-hidden="true"
+                role="status"
+                className="inline mr-2 w-20 h-20 md:w-40 md:h-40 text-gray-100 animate-spin"
+                viewBox="0 0 100 101"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="#a5b4fc"
+                />
+              </svg>
+              <p className=" text-lg pb-1 md:text-2xl font-poppins text-indigo-400">
+                Loading Users ...
+              </p>
+            </div>
+          )}
+          {!loadingUsers && (
+            <div className=" h-[300px] md:max-h-[380px] mb-[25px]  md:min-h-[380px] overflow-y-scroll p-2 scroll-m-0 scrollbar-width: thin  flex flex-col items-center">
+              <RadioGroup value={selected} onChange={setSelected}>
+                <RadioGroup.Label className="sr-only">
+                  Server size
+                </RadioGroup.Label>
+                <div className="space-y-4">
+                  {users &&
+                    users.map((account) => (
+                      <User key={account.id} user={account} />
+                    ))}
+                  {customUser && (
+                    <div className="relative">
+                      <User
+                        key={customUser.id}
+                        user={customUser}
+                        type="CUSTOM"
                       />
-                    </svg>
-                  </div>
-                )}
-              </div>
-            </RadioGroup>
-          </div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="text-indigo-800 w-6 h-6 absolute top-1/2 -translate-y-1/2 right-[-32px] cursor-pointer"
+                        onClick={() => {
+                          setCustomUser(null);
+                          selected?.type === "CUSTOM" && setSelected(users[0]);
+                        }}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+              </RadioGroup>
+            </div>
+          )}
         </div>
         {/* register  */}
         <div className=" border-b-2 mt-5 border-slate-300 w-[350px] md:hidden"></div>
@@ -211,8 +249,8 @@ function UserSelect() {
               </div>
             )}
             {customUser && (
-              <div className="w-[80%]  min-h-[350px] flex items-center justify-center flex-col">
-                <div className="flex flex-col items-center justify-center w-[100px]  h-[100px] mt-3 border-8 rounded-full  border-green-400">
+              <div className="w-full md:w-[80%]  h-[250px] md:min-h-[350px] flex items-center justify-center flex-col">
+                <div className="flex flex-col items-center justify-center w-[100px]  h-[100px] md:mt-3 border-8 rounded-full  border-green-400">
                   <div className="text-grenn-200">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -225,25 +263,25 @@ function UserSelect() {
                     </svg>
                   </div>
                 </div>
-                <p className="text-4xl mt-10 font-poppins text-green-400">
+                <p className=" text-xl text-center w-[120%] md:text-4xl mt-2  md:mt-10 font-poppins text-green-400">
                   {" "}
                   Registration Successful
                 </p>
               </div>
             )}
             {!customUser && (
-              <p className="font-poppins pt-2 text-[10px] w-[80%] text-center md:text-base">
+              <p className="font-poppins md:pt-2 text-[10px] w-[80%] text-center md:text-base">
                 *please note: the name of image should be same as your name.{" "}
               </p>
             )}
           </div>
         )}
         {loading && (
-          <div className="w-full  h-full flex flex-col items-center justify-center gap-20">
+          <div className="w-full  h-full flex flex-col items-center justify-center gap-10 md:gap-20">
             <svg
               aria-hidden="true"
               role="status"
-              className="inline mr-2 w-40 h-40 text-gray-100 animate-spin"
+              className="inline mr-2 w-20 h-20 md:w-40 md:h-40 text-gray-100 animate-spin"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -257,7 +295,7 @@ function UserSelect() {
                 fill="#a5b4fc"
               />
             </svg>
-            <p className="text-2xl font-poppins text-indigo-400">
+            <p className=" text-lg pb-1 md:text-2xl font-poppins text-indigo-400">
               Registering new User...
             </p>
           </div>
